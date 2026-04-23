@@ -1,8 +1,9 @@
 #!/bin/bash
 
 service mariadb start
-
-sleep 5
+until mysqladmin ping -h 127.0.0.1 --silent; do
+ sleep 1
+done
 
 mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DTBS;"
 
@@ -17,9 +18,3 @@ mysql -e "FLUSH PRIVILEGES;"
 service mariadb stop
 
 exec mysqld_safe
-
-
-#later if sleep doesnt work do :
-# until mysqladmin ping -h 127.0.0.1 --silent; do
-#  sleep 1
-#done
