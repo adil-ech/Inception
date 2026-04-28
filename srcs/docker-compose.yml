@@ -18,6 +18,7 @@ services:
       - wp_data:/var/www/html
     depends_on:
       - mariadb
+      - redis
     networks:
       - inception
     restart: always
@@ -33,6 +34,19 @@ services:
     networks:
       - inception
     restart: always
+  redis:
+    build: 
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    container_name: redis
+    networks:
+      - inception
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 volumes:
   db_data:
   wp_data:
