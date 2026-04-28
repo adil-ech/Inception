@@ -55,6 +55,16 @@ services:
     networks:
       - inception
     restart: always
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    container_name: adminer
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    restart: always
 volumes:
   db_data:
   wp_data:
