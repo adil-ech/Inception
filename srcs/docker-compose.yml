@@ -47,6 +47,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  static-site:
+    build:
+      context: ./requirements/bonus/static-site
+      dockerfile: Dockerfile
+    container_name: static-site
+    networks:
+      - inception
+    restart: always
 volumes:
   db_data:
   wp_data:
