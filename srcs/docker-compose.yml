@@ -94,24 +94,34 @@ services:
     volumes:
       - gitea_data:/home/git/gitea
     environment:
-      # Tell Gitea to use SQLite3 (no external DB needed)
       - GITEA__database__DB_TYPE=sqlite3
       - GITEA__database__PATH=/home/git/gitea/data/gitea.db
-      # Server configuration
       - GITEA__server__ROOT_URL=http://localhost:3000/
       - GITEA__server__HTTP_PORT=3000
-      # Run as git user
       - USER=git
       - USER_UID=1000
       - USER_GID=1000
-      # Skip installer wizard completely
       - GITEA__security__INSTALL_LOCK=true
-      # Default admin account (created automatically)
       - GITEA__admin__DISABLE_REGULAR_ORG_CREATION=false
     restart: always
 volumes:
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/db
   wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
   gitea_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/gitea
 networks:
   inception:
