@@ -11,8 +11,8 @@ down:
 
 clean: down
 	docker system prune -af
-	rm -rf $(HOME)/data
+	sudo rm -rf $(HOME)/data
 fclean: clean
 	docker-compose -f srcs/docker-compose.yml down -v --rmi all --remove-orphans
 	docker system prune -af --volumes
-re: clean all
+re: fclean all
